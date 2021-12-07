@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./mongo/db/mongodb:/data/db
+    ports:
+      - 27017:27017
+    restart: always
+  server:
+    build: .
+    container_name: api-currency-quotation
+    depends_on:
+      - mongodb
+    env_file:
+      - .env
+    environment:
+      MONGO_HOST: mongodb
+    ports:
+      - 3003:3003
+    restart: always
+    volumes:
+      - ./:/home/node/app
+    links:
+      - mongodb

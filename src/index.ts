@@ -7,7 +7,7 @@ const router = Router();
 app.use(express.json());
 
 router.get('/', (request: Request, response: Response) => {
-    response.json({ message: 'Hello World: from Express + TypeScript' });
+    response.json({ message: 'Hello World: from Express + TypeScript + Docker' });
 });
 
 app.use(router);
