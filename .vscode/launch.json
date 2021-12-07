@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch server.ts via nodemon",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nodemon",
+            "runtimeArgs": ["--require=dotenv/config"],
+            "program": "${workspaceFolder}/src/index.ts",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "env": {
+        "es2021": true,
+        "node": true,
+        "jest/globals": true
+    },
+    "extends": [
+        "airbnb-base",
+        "airbnb-typescript/base",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:prettier/recommended",
+        "plugin:jest/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.eslint.json"
+    },
+    "plugins": ["@typescript-eslint", "prettier", "jest"],
+    "rules": {
+        "prettier/prettier": "error",
+        "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+        "max-classes-per-file": ["error", 2],
+        "@typescript-eslint/lines-between-class-members": ["off"],
+        "import/no-extraneous-dependencies": [
+            "error",
+            { "devDependencies": ["./ts-auto-mock-config.ts", "**/*.test.ts", "**/*.spec.ts"] }
+        ]
+    }
+}
