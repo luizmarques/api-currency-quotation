@@ -47,7 +47,7 @@ export class UserEntityProps {
     readonly password: string;
 
     @IsOptional()
-    readonly favoriteCurrency: [String];
+    readonly favoriteCurrency: String[];
 }
 
 export default class UserEntity {
