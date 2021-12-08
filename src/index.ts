@@ -1,15 +1,10 @@
-import express, { Router, Request, Response } from 'express';
+import connection from './infra/data/connection';
+import setupApp from './setup-app';
 
-const app = express();
+import dotenv from 'dotenv';
 
-const router = Router();
+dotenv.config();
 
-app.use(express.json());
+const conn = connection();
 
-router.get('/', (request: Request, response: Response) => {
-    response.json({ message: 'Hello World: from Express + TypeScript + Docker' });
-});
-
-app.use(router);
-
-app.listen(3003, () => console.log('Server running on port 3003'));
+setupApp(conn);

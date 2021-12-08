@@ -1,58 +1,102 @@
+import { Connection, Model } from 'mongoose';
+import connection from '../connection';
 import UserEntity, { UserEntityProps } from '../../../domain/entities/user.entity';
 import PersistenceError from '../../../domain/errors/persistence.error';
 import UserRepository from '../../../domain/repositories/user.repository';
-import UserModel from '../models/user.model';
+import UserSchema from '../models/user.schema';
 
 export default class UserRespositoryImpl implements UserRepository {
-    private readonly UserModel = UserModel;
+    private readonly conn: Connection;
+    private readonly UserModel: Model<UserEntityProps>;
+
+    constructor(conn?: Connection) {
+        this.conn = conn || connection();
+        this.UserModel = this.conn.model<UserEntityProps>('users', UserSchema);
+    }
 
     async findById(userId: string): Promise<UserEntity | null> {
-        const userProps = await this.UserModel.findById(userId);
-        if (!userProps) return null;
-        return new UserEntity(userProps);
+        try {
+            const userProps = await this.UserModel.findById(userId);
+            if (!userProps) return null;
+            return new UserEntity(userProps);
+        } catch (e) {
+            throw new PersistenceError(
+                `Error on UserRepository.findById: ${JSON.stringify(e, null, 4)}`
+            );
+        }
     }
 
     async findBy(userEntityProps: Partial<UserEntityProps>): Promise<UserEntity[] | null> {
-        const usersProps = await this.UserModel.find(userEntityProps);
-        if (!usersProps) return null;
-        const users: UserEntity[] = [];
+        try {
+            const usersProps = await this.UserModel.find(userEntityProps);
+            if (!usersProps.length) return null;
+            const users: UserEntity[] = [];
 
-        usersProps.forEach((userProps) => users.push(new UserEntity(userProps)));
+            usersProps.forEach((userProps) => users.push(new UserEntity(userProps.toObject())));
 
-        return users;
+            return users;
+        } catch (e) {
+            throw new PersistenceError(
+                `Error on UserRepository.findby: ${JSON.stringify(e, null, 4)}`
+            );
+        }
     }
 
     async findAll(): Promise<UserEntity[] | null> {
-        const usersProps = await this.UserModel.find();
-        if (!usersProps) return null;
-        const users: UserEntity[] = [];
+        try {
+            const usersProps = await this.UserModel.find();
+            if (!usersProps) return null;
+            const users: UserEntity[] = [];
 
-        usersProps.forEach((userProps) => users.push(new UserEntity(userProps)));
+            usersProps.forEach((userProps) => users.push(new UserEntity(userProps.toObject())));
 
-        return users;
+            return users;
+        } catch (e) {
+            throw new PersistenceError(
+                `Error on UserRepository.findAll: ${JSON.stringify(e, null, 4)}`
+            );
+        }
     }
 
     async insert(userEntity: UserEntity): Promise<UserEntity> {
-        const user = new this.UserModel(userEntity.props);
-        await user.save();
-        return new UserEntity(user);
+        try {
+            const user = new this.UserModel(userEntity.props);
+            await user.save();
+            return new UserEntity(user.toObject());
+        } catch (e) {
+            throw new PersistenceError(
+                `Error on UserRepository.insert: ${JSON.stringify(e, null, 4)}`
+            );
+        }
     }
 
     async update(userEntity: UserEntity): Promise<UserEntity> {
-        const { props } = userEntity;
-        const updatedUser = await this.UserModel.findOneAndUpdate(
-            { _id: props._id },
-            { $set: props },
-            { new: true }
-        );
+        try {
+            const { props } = userEntity;
+            const updatedUser = await this.UserModel.findOneAndUpdate(
+                { _id: props._id },
+                { $set: props },
+                { new: true }
+            );
 
-        if (!updatedUser)
-            throw new PersistenceError(`User with id ${props._id as string} not found`);
+            if (!updatedUser)
+                throw new PersistenceError(`User with id ${props._id as string} not found`);
 
-        return new UserEntity(updatedUser);
+            return new UserEntity(updatedUser.toObject());
+        } catch (e) {
+            throw new PersistenceError(
+                `Error on UserRepository.update: ${JSON.stringify(e, null, 4)}`
+            );
+        }
     }
 
     async delete(userId: string): Promise<void> {
-        await this.UserModel.findOneAndDelete({ _id: userId });
+        try {
+            await this.UserModel.findOneAndDelete({ _id: userId });
+        } catch (e) {
+            throw new PersistenceError(
+                `Error on UserRepository.delete: ${JSON.stringify(e, null, 4)}`
+            );
+        }
     }
 }

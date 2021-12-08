@@ -1,0 +1,1 @@
+//rota GET para acessar a api

@@ -30,6 +30,4 @@ const UserSchema = new Schema<UserEntityProps>(
     }
 );
 
-const UserModel = model<UserEntityProps>('users', UserSchema);
-
-export default UserModel;
+export default UserSchema;
