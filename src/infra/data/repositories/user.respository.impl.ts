@@ -14,18 +14,6 @@ export default class UserRespositoryImpl implements UserRepository {
         this.UserModel = this.conn.model<UserEntityProps>('users', UserSchema);
     }
 
-    async findById(userId: string): Promise<UserEntity | null> {
-        try {
-            const userProps = await this.UserModel.findById(userId);
-            if (!userProps) return null;
-            return new UserEntity(userProps);
-        } catch (e) {
-            throw new PersistenceError(
-                `Error on UserRepository.findById: ${JSON.stringify(e, null, 4)}`
-            );
-        }
-    }
-
     async findBy(userEntityProps: Partial<UserEntityProps>): Promise<UserEntity[] | null> {
         try {
             const usersProps = await this.UserModel.find(userEntityProps);
@@ -38,22 +26,6 @@ export default class UserRespositoryImpl implements UserRepository {
         } catch (e) {
             throw new PersistenceError(
                 `Error on UserRepository.findby: ${JSON.stringify(e, null, 4)}`
-            );
-        }
-    }
-
-    async findAll(): Promise<UserEntity[] | null> {
-        try {
-            const usersProps = await this.UserModel.find();
-            if (!usersProps) return null;
-            const users: UserEntity[] = [];
-
-            usersProps.forEach((userProps) => users.push(new UserEntity(userProps.toObject())));
-
-            return users;
-        } catch (e) {
-            throw new PersistenceError(
-                `Error on UserRepository.findAll: ${JSON.stringify(e, null, 4)}`
             );
         }
     }
@@ -86,16 +58,6 @@ export default class UserRespositoryImpl implements UserRepository {
         } catch (e) {
             throw new PersistenceError(
                 `Error on UserRepository.update: ${JSON.stringify(e, null, 4)}`
-            );
-        }
-    }
-
-    async delete(userId: string): Promise<void> {
-        try {
-            await this.UserModel.findOneAndDelete({ _id: userId });
-        } catch (e) {
-            throw new PersistenceError(
-                `Error on UserRepository.delete: ${JSON.stringify(e, null, 4)}`
             );
         }
     }

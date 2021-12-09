@@ -11,7 +11,7 @@ const userRoutes = (router: Router, connection: Connection) => {
     const userRepository = new UserRespositoryImpl(connection);
     const updateUserUseCase = new UpdateUserUseCase(userRepository)
     const registerNewUser = new RegisterNewUserUserCase(userRepository);
-    //Resolver a tipagem de chooseFavoriteCurrency
+    //Resolver a tipagem de updateUserUseCase
     const userController = new UserController(registerNewUser, updateUserUseCase as any);
     
 

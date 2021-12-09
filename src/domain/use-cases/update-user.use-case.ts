@@ -1,7 +1,7 @@
 import UserEntity, { UserEntityProps } from '../entities/user.entity';
 import UserRepository from '../repositories/user.repository';
 
-export default class ChooseFavoriteCurrencyUseCase {
+export default class UpdateUserUseCase {
   constructor(private readonly userRepository: UserRepository) { }
 
   async execute(userEntityProps: UserEntityProps): Promise<UserEntityProps> {
