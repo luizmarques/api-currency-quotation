@@ -11,9 +11,9 @@ const getTopTenCurrency = async () => {
   return response.data
 }
 
-const getCurrencyHistory = async () => {
+const getCurrencyHistory = async (code: string) => {
   const baseURI = process.env.BASE_URI_AWSOMEAPI;
-  const currency = "USD";
+  const currency = code;
   const finalURL = `${baseURI}${currency}/100`
 
   const response = await axios.get(finalURL)

@@ -7,15 +7,16 @@ import ShowCurrencyHistory from '../../domain/use-cases/show-currency-history.us
 export default class CurrencyController {
     constructor(
         private readonly showTopTenCurrency: ShowTopTenCurrency,
-        private readonly showCurrencyHistory: ShowCurrencyHistory) {}
-    
+        private readonly showCurrencyHistory: ShowCurrencyHistory) { }
+
     async getCurrencyHistory(
         request: Request,
         response: Response
     ): Promise<void> {
         const { body } = request;
+        const { code } = request.params;
         try {
-            const currencyHistory = await this.showCurrencyHistory.execute();
+            const currencyHistory = await this.showCurrencyHistory.execute(code);
             response.status(200).json(currencyHistory);
         } catch (e) {
             let statusCode: number;

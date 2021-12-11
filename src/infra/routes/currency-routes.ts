@@ -9,14 +9,14 @@ const currencyRoutes = (router: Router) => {
 
   const showCurrency = new ShowCurrencyUseCase();
   const showTopTenCurrency = new ShowTopTenCurrency();
-  const currencyController = new CurrencyController(showCurrency, showTopTenCurrency);
+  const currencyController = new CurrencyController(showTopTenCurrency, showCurrency);
 
   router.get(CURRENCY_API_PREFIX, (request, response) =>
-    currencyController.getCurrencyHistory(request, response)
+    currencyController.getTopTenCurrency(request, response)
   );
 
-  router.get(`${CURRENCY_API_PREFIX}/dashboard/history`, (request, response) =>
-    currencyController.getTopTenCurrency(request, response)
+  router.get(`${CURRENCY_API_PREFIX}/dashboard/history/:code`, (request, response) =>
+  currencyController.getCurrencyHistory(request, response)
   );
   
 };
