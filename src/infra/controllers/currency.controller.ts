@@ -16,7 +16,13 @@ export default class CurrencyController {
         const { body } = request;
         const { code } = request.params;
         try {
-            const currencyHistory = await this.showCurrencyHistory.execute(code);
+            const currencyHistory: any = await this.showCurrencyHistory.execute(code);
+            
+            // const currencyHistory: any = currencyHistoryTmp[0];
+            // currencyHistory.push(currencyHistoryTmp.slice(1))
+
+
+
             response.status(200).json(currencyHistory);
         } catch (e) {
             let statusCode: number;
