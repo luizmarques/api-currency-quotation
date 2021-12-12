@@ -3,6 +3,8 @@ import { Connection } from 'mongoose';
 import routes from './infra/routes';
 import cors from 'cors';
 
+const port = process.env.PORT || 3003;
+
 const setupApp = (connection: Connection) => {
     const app = express();
     
@@ -11,7 +13,9 @@ const setupApp = (connection: Connection) => {
 
     app.use(routes(connection));
 
-    return app.listen(3003, () => console.log('Server running on port 3003'));
+    app.listen(port, function(){
+        console.log("Express server listening on port: ", port );
+      });
 };
 
 export default setupApp;
