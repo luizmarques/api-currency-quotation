@@ -5,7 +5,6 @@ const UserSchema = new Schema<UserEntityProps>(
     {
         name: {
             type: String,
-            required: true,
             minlength: 3,
         },
         email: {
@@ -16,7 +15,6 @@ const UserSchema = new Schema<UserEntityProps>(
         password: {
             type: String,
             required: true,
-            select: false,
         },
         favoriteCurrency: {
             type: [String],

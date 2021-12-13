@@ -5,7 +5,7 @@ export default class LoginUserUseCase {
   constructor(private readonly userRepository: UserRepository) { }
 
   async execute(userEntityProps: UserEntityProps): Promise<Boolean> {
-    // const user = new UserEntity(userEntityProps);
+    const user = new UserEntity(userEntityProps);
 
     const emailAlreadyInUse = await this.userRepository.findBy({
       email: userEntityProps.email,

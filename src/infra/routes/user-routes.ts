@@ -23,7 +23,7 @@ const userRoutes = (router: Router, connection: Connection) => {
     router.put(`${USERS_API_PREFIX}/favoriteCurrency`, (request, response) =>
         userController.updateUser(request, response)
     );
-
+    
     router.post(`${USERS_API_PREFIX}/login`, (request, response) =>
         userController.loginUser(request, response)
     );

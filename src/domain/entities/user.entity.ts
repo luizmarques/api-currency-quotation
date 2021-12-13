@@ -12,7 +12,6 @@ import ValidationError, { Failure } from '../errors/validation.error';
 
 export class UserEntityProps {
     @IsOptional()
-    // @IsString()
     readonly _id?: any;
 
     @IsString({
@@ -20,9 +19,6 @@ export class UserEntityProps {
     })
     @IsNotEmpty({
         message: 'field_required',
-    })
-    @MinLength(3, {
-        message: 'should_have_at_least_3_chars',
     })
     readonly name: string;
 
@@ -32,19 +28,12 @@ export class UserEntityProps {
     @IsEmail({}, { message: 'should_be_a_valid_email' })
     readonly email: string;
 
-    // @IsNotEmpty({
-    //     message: 'field_required',
-    // })
-    // @IsString({
-    //     message: 'should_be_string',
-    // })
-    // @MinLength(8, {
-    //     message: '@@@@@@@@@@@@should_have_between_8_and_50_chars',
-    // })
-    // @MaxLength(50, {
-    //     message: 'XXXXXXXXXXXXXXXXshould_have_between_8_and_50_chars',
-    // })
-    //teste para fazer debug
+    @IsNotEmpty({
+        message: 'field_required',
+    })
+    @IsString({
+        message: 'should_be_string',
+    })
     readonly password: any;
 
     @IsOptional()

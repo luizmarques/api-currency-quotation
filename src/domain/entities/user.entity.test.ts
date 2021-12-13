@@ -8,7 +8,7 @@ describe('user entity', () => {
             name: 'Luiz Marques',
             email: 'luiz@contato.com.br',
             password: '123123123',
-            favoriteCurrency: ["BRL", "USD"]
+            favoriteCurrency: ["BRL"]
         };
 
         // act
