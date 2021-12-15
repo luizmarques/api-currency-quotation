@@ -4,18 +4,19 @@ import UserRepository from '../repositories/user.repository';
 export default class LoginUserUseCase {
   constructor(private readonly userRepository: UserRepository) { }
 
-  async execute(userEntityProps: UserEntityProps): Promise<Boolean> {
-    const user = new UserEntity(userEntityProps);
+  async execute(userEntityProps: UserEntityProps): Promise<UserEntity | null> {
+    // const user = new UserEntity(userEntityProps);
+    try {
+      const userResponse = await this.userRepository.findBy({
+        email: userEntityProps.email,
+        password: userEntityProps.password,
+      });
+      console.log(userResponse)
 
-    const emailAlreadyInUse = await this.userRepository.findBy({
-      email: userEntityProps.email,
-      password: userEntityProps.password,
-    });
+      return userResponse? userResponse[0] : null
 
-    if(!emailAlreadyInUse){
-      return false
+    } catch (e) {
+      return null
     }
-
-    return true;
   }
 }

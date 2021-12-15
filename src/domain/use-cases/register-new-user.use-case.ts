@@ -11,8 +11,6 @@ export default class RegisterNewUserUserCase {
             email: user.props.email,
         });
 
-        console.log(emailAlreadyInUse)
-
         if (emailAlreadyInUse?.length) {
             throw ('email_already_in_use');
         }
