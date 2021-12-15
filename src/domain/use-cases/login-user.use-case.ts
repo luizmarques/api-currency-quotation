@@ -11,7 +11,6 @@ export default class LoginUserUseCase {
         email: userEntityProps.email,
         password: userEntityProps.password,
       });
-      console.log(userResponse)
 
       return userResponse? userResponse[0] : null
 
